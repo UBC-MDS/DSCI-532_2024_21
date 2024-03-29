@@ -17,3 +17,7 @@ Our dashboard serves as a personalized job market navigator, offering basic insi
 ### 3. Research questions
 
 ### 4. App sketch and description
+
+![sketch](img/sketch.png)
+
+The app provides a user-friendly dashboard to explore U.S. job postings, featuring a dynamic map and comprehensive filtering options. Users can adjust salary ranges through sliders and specify the type of job and experience level via checkboxes to tailor the job search. The map offers a color-coded view of job postings by region, with a clickable feature for pinpointing the highest-paying opportunities in each state. On the right side, bar and pie charts display the average salary by region and the proportion of job postings by region, respectively, updating in real-time to reflect changes made through the filters. This interactive platform is designed for simplicity, ensuring that users can seamlessly navigate through different data visualizations to gain insights into the U.S. job market.
