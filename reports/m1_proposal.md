@@ -20,11 +20,13 @@ https://www.kaggle.com/datasets/arshkon/linkedin-job-postings.
 
 The orginal dataset consists of 33157 rows and 28 columns providing various information about each job posting from LinkedIn. There are several interesting columns we may focus on for this visulization task, they are: `title`,`max_salary`,`min_salary`, `pay_period`, `formatted_work_type`,`location`, `remote_allowed`,`sponsored`,`formatted_experience_level`. 
 
-#### Columns:
+#### Columns of Processed Dataset:
 
 Some columns in orginal dataset contain a lot of missing data, so we need to preprocess the data before feeding it to the dashboard. After removing the missing data, the final dataset we will work on is approximately 11100 rows and 10 columns. 
 
-The dataset contains various categorical variables:
+The processed dataset contains continuous variables:`max_salary` and `min_salary`.
+
+The processed dataset also contains various categorical variables:
 - `pay_period`: Indicates how often salary is paid (Hourly, Monthly, Yearly).
 - `formatted_work_type`: Categorizes the type of work arrangement (Full-time, Part-time, Contract).
 - `location`: Specifies the geographic location of the job (e.g., New York, NY; Bellevue, WA; Oakland, CA).
@@ -33,14 +35,14 @@ The dataset contains various categorical variables:
 - `remote_allowed`: Signals whether remote work is allowed for the job.
 
 
-#### Salary/Type/Location Distribution and More:
+#### Distribution of Job Postings:
 
-This dataset contains the work salary information which includes the maximum salary and minumum salary. This dataset also provides information on the distribution of work types. It shows the number of job postings categorized as full-time, contract, or other. Additionally, it provides distribution for job locations, with a focus on the United States. Besides, This dataset contains other information such as remote type, sponsored type, work type, experience level for us to explore the distribution of job postings.
+This dataset contains the work salary information which includes the maximum salary and minumum salary. This dataset also provides information on the distribution of work types. It shows the number of job postings categorized as full-time, contract, or other. Additionally, it provides distribution for job locations, with a focus on the United States. Besides, this dataset contains other information such as remote type, sponsored type, work type, experience level for us to explore the distribution of job postings.
 
 
-#### Insights:
+#### Insights of Job Postings:
 
-This dataset offers valuable insights into the job market, including salary trends, distribution of work types, and job locations. Each sample includes details such as job title, company, description, salary, pay period, work type, and location. It can be utilized for analysis purposes such as identifying high-demand job sectors, understanding salary expectations, and exploring geographical job trends.
+This dataset offers valuable insights into the 2023 US job market, including salary trends, distribution of work types, and job locations. Each sample includes details such as job title, company, description, salary, pay period, work type, and location. It can be utilized for analysis purposes such as identifying high-demand job sectors, understanding salary expectations, and exploring geographical job trends.
 
 
 
