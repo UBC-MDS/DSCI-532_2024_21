@@ -35,7 +35,7 @@ The dataset contains various categorical variables:
 
 #### Salary/Type/Location Distribution and More:
 
-This dataset contains the work salary information which includes the maximum salary and minumum salary. This dataset also provides information on the distribution of work types. It shows the number of job postings categorized as full-time, contract, or other. Additionally, it provides distribution for job locations, with a focus on the United States. Besides, This dataset contains has remote type, sponsored type, work type, experience level for us to explore.
+This dataset contains the work salary information which includes the maximum salary and minumum salary. This dataset also provides information on the distribution of work types. It shows the number of job postings categorized as full-time, contract, or other. Additionally, it provides distribution for job locations, with a focus on the United States. Besides, This dataset contains other information such as remote type, sponsored type, work type, experience level for us to explore the distribution of job postings.
 
 
 #### Insights:
