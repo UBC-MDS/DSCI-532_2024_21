@@ -3,11 +3,11 @@ channels:
     - conda-forge
     - defaults
 dependencies:
-    - ipykernel
-    - altair-all
-    - dash
-    - dash-bootstrap-components
-    - plotly
+    - ipykernel>=6.0.0
+    - altair-all>=5.0.0
+    - dash>=2.16.0
+    - dash-bootstrap-components>=1.5.0
+    - plotly>=5.0.0
     - pip
 pip:
     - dash-vega-components
