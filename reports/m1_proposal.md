@@ -16,31 +16,24 @@ Our dashboard serves as a personalized job market navigator, offering basic insi
 
 The dataset we are using is a collection of job postings from LinkedIn, which is hosted on <https://www.kaggle.com/datasets/arshkon/linkedin-job-postings>.
 
-The orginal dataset consists of 33157 rows and 28 columns providing various information about each job posting from LinkedIn. There are several interesting columns we may focus on for this visulization task, they are: `title`,`max_salary`,`min_salary`, `pay_period`, `formatted_work_type`,`location`, `remote_allowed`,`sponsored`,`formatted_experience_level`.
-
-#### Columns of Processed Dataset:
+The orginal dataset consists of 33157 rows and 28 columns providing various information about each job posting from LinkedIn. There are several interesting columns we may focus on for this visulization task, they are: `title`,`max_salary`,`min_salary`, `pay_period`, `formatted_work_type`,`location`, `remote_allowed`, `formatted_experience_level`.
 
 Some columns in orginal dataset contain a lot of missing data, so we need to preprocess the data before feeding it to the dashboard. After removing the missing data, the final dataset we will work on is approximately 11100 rows and 10 columns.
 
-The processed dataset contains continuous variables:`max_salary` and `min_salary`.
+#### Key Variables:
 
-The processed dataset also contains various categorical variables:
+- Salary Information: `max_salary` and `min_salary` provide the salary range offered for each position.
+- Experience Requirements: `formatted_experience_level` specifies the experience level required (entry, associate, executive, etc.)
+- Work Arrangement:
+  - `pay_period`: Indicates how often salary is paid (Hourly, Monthly, Yearly).
+  - `formatted_work_type`: Categorizes the type of work arrangement (Full-time, Part-time, Contract).
+- Location and Flexibility:
+  - `location`: Specifies the geographic location of the job.
+  - `remote_allowed`: States whether the job can be done remotely.
 
-\- `pay_period`: Indicates how often salary is paid (Hourly, Monthly, Yearly).
+#### Variable Engineering:
 
-\- `formatted_work_type`: Categorizes the type of work arrangement (Full-time, Part-time, Contract).
-
-\- `location`: Specifies the geographic location of the job (e.g., New York, NY; Bellevue, WA; Oakland, CA).
-
-\- `formatted_experience_level`: Represents the required level of job experience (entry, associate, executive, etc.).
-
-\- `sponsored`: Indicates whether the job listing is sponsored or promoted.
-
-\- `remote_allowed`: Signals whether remote work is allowed for the job.
-
-#### Distribution of Job Postings:
-
-This dataset contains the work salary information which includes the maximum salary and minumum salary. This dataset also provides information on the distribution of work types. It shows the number of job postings categorized as full-time, contract, or other. Additionally, it provides distribution for job locations, with a focus on the United States. Besides, this dataset contains other information such as remote type, sponsored type, work type, experience level for us to explore the distribution of job postings.
+In addition to the selected variables, we plan to derive a new variable named `region` from the state code extracted from the last segment of the `location` column. This process involves mapping state codes to one of five major U.S. regions. This categorization enables us to analyze and visualize job postings and corresponding statistics at a broader, regional level, offering insights into regional job market dynamics.
 
 #### Insights of Job Postings:
 
@@ -52,15 +45,15 @@ Our easy to use dashboard can help people from different fields and expertise an
 
 **a) Jacob - The Recent College Graduate**
 
-Jacob is a recent computer science graduate looking for a full-time entry-level software development position in the technology sector. Eager to find a job that aligns with his skills and pays a competitive salary, Jacob uses the dashboard's filters to set a minimum salary expectation and select full-time job postings. By focusing on states in the West and Northeast regions, known for their tech industries, he can quickly visualize which states have the highest-paying jobs that match his criteria. Jacob uses the color-coded map to identify hotspots for tech jobs and uses the average salary by region bar chart to decide where to concentrate his applications.
+Jacob is a recent computer science graduate looking for a full-time entry-level software development position in the technology sector. Eager to [find] a job that aligns with his skills and pays a competitive salary, Jacob uses the dashboard's filters to set a minimum salary expectation and select full-time job postings. By focusing on states in the West and Northeast regions, known for their tech industries, he can quickly visualize which states have the highest-paying jobs that match his criteria. Jacob uses the color-coded map to identify hotspots for tech jobs and uses the average salary by region bar chart to decide where to concentrate his applications.
 
 **b) Angela - The Career Advisor**
 
-Angela is a career advisor at a large university, assisting students and alumni in navigating their job search. She utilizes the dashboard to prepare for advising sessions by setting various filters to match the diverse needs of her clientele. With the dashboard, Angela can compare the average salaries and job distribution in different regions to guide students on where they might want to relocate for better opportunities. She pays particular attention to the pie chart showing the proportion of job postings by region to inform students about market saturation and potential competition in their fields.
+Angela is a career advisor at a large university, assisting students and alumni in navigating their job search. She utilizes the dashboard to [prepare] for advising sessions by setting various filters to match the diverse needs of her clientele. With the dashboard, Angela can compare the average salaries and job distribution in different regions to guide students on where they might want to relocate for better opportunities. She pays particular attention to the pie chart showing the proportion of job postings by region to inform students about market saturation and potential competition in their fields.
 
 **c) Carlos - The Human Resources Analyst**
 
-Carlos works as a human resources analyst for a multinational corporation and is responsible for providing insights on the competitive landscape of salaries and job opportunities. He leverages the dashboard's dynamic features to tailor searches for different categories of corporate jobs across various experience levels. By adjusting the salary range sliders, Carlos can analyze the market for mid-senior level positions in the Southeast and Midwest regions, where his company has a significant presence. The clickable map feature aids Carlos in identifying which states may require salary adjustments to attract top talent, and the real-time updating charts help him in preparing reports for the executive team on regional compensation trends.
+Carlos works as a human resources analyst for a multinational corporation and is responsible for providing insights on the competitive landscape of salaries and job opportunities. He leverages the dashboard's dynamic features to [tailor] searches for different categories of corporate jobs across various experience levels. By adjusting the salary range sliders, Carlos can analyze the market for mid-senior level positions in the Southeast and Midwest regions, where his company has a significant presence. The clickable map feature aids Carlos in identifying which states may require salary adjustments to attract top talent, and the real-time updating charts help him in preparing reports for the executive team on regional compensation trends.
 
 ### 4. App sketch and description
 
