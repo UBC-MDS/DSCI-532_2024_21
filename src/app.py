@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 
 # Initialize the app
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 # Define the layout of the app
 app.layout = html.Div([
