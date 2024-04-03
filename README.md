@@ -2,7 +2,7 @@
 
 ### Author
 
-@Owl64901 (Yan Zeng), @andyzhangstat (Andy Zhang), @Prabh95 (Prabhjit Thind), @sifanzzz (Sifan Zhang)
+@Owl64901(Yan Zeng), @andyzhangstat (Andy Zhang), @Prabh95 (Prabhjit Thind), @sifanzzz (Sifan Zhang)
 
 ### About
 
