@@ -47,8 +47,11 @@ python -m src.app
 ## Contributors:
 
 [@Owl64901](https://github.com/Owl64901)
+
 [@andyzhangstat](https://github.com/andyzhangstat)
-[@Prabh95] (https://github.com/Prabh95)
+
+[@Prabh95](https://github.com/Prabh95)
+
 [@sifanzzz](https://github.com/sifanzzz)
 
 
