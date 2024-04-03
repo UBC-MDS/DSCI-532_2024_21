@@ -44,7 +44,7 @@ python -m src.app
 ```
 
 
-## Contributors:
+## Contributors
 
 [@Owl64901](https://github.com/Owl64901)
 
