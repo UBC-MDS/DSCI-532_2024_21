@@ -26,7 +26,7 @@ git clone git@github.com:UBC-MDS/DSCI-532_2024_21_Job-Postings.git
 2. Create the virtual environment
 
 ```bash
-conda env create -f environment.yml
+conda env create -f environment.yaml
 conda activate 532_group_21
 ```
 
