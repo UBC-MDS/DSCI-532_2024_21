@@ -246,6 +246,11 @@ def update_bar_chart(
     jobs_by_region = filtered_df["region"].value_counts().reset_index()
     jobs_by_region.columns = ["region", "count"]
 
+    # Generate the colors for the bar chart dynamically
+    bar_colors = [
+        region_colors.get(region, "gray") for region in jobs_by_region["region"]
+    ]
+
     # Create a new figure
     figure = go.Figure(
         data=[
