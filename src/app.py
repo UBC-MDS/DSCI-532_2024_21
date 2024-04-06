@@ -13,12 +13,19 @@ df = pd.read_csv("data/processed/cleaned_job_postings.csv")
 jobs_by_region = df["region"].value_counts().reset_index()
 jobs_by_region.columns = ["region", "count"]
 
+# preprocessing for avg salary graph
 df["avg_salary"] = df[["min_salary", "max_salary"]].mean(axis=1)
 avg_salary_by_region = df.groupby("region")["avg_salary"].mean().reset_index()
 avg_salary_by_region = avg_salary_by_region.sort_values(
     by="avg_salary", ascending=False
 )
 
+# Preprocessing for avg min and max salary
+avg_min_max_salaries_by_region = (
+    df.groupby("region")
+    .agg(avg_min_salary=("min_salary", "mean"), avg_max_salary=("max_salary", "mean"))
+    .reset_index()
+)
 
 # Edit by A.Z.
 from dash import Dash, html, dcc, Input, Output
@@ -107,6 +114,28 @@ avg_salary_by_region_fig.update_layout(
     template="plotly_white",
 )
 
+# Plot for avg min and max by region
+fig_avg_min_max_region = go.Figure(
+    data=[
+        go.Bar(
+            name="Avg Min Salary",
+            x=avg_min_max_salaries_by_region["region"],
+            y=avg_min_max_salaries_by_region["avg_min_salary"],
+        ),
+        go.Bar(
+            name="Avg Max Salary",
+            x=avg_min_max_salaries_by_region["region"],
+            y=avg_min_max_salaries_by_region["avg_max_salary"],
+        ),
+    ]
+)
+# Change the bar mode here if you prefer stacked bars
+fig_avg_min_max_region.update_layout(
+    barmode="group",
+    title="Average Min and Max Salaries by Region",
+    xaxis_title="Region",
+    yaxis_title="Average Salary",
+)
 
 # Define the layout of the app
 app.layout = html.Div(
@@ -183,8 +212,8 @@ app.layout = html.Div(
                             style={"width": "30%", "display": "inline-block"},
                         ),
                         dcc.Graph(
-                            id="proportion-job-postings",
-                            figure=go.Figure(),  # Placeholder empty figure
+                            id="avg-min-max-salary-region",
+                            figure=fig_avg_min_max_region,
                             style={"width": "30%", "display": "inline-block"},
                         ),
                         dcc.Graph(
@@ -331,6 +360,73 @@ def update_avg_bar_chart(
         xaxis_title="Region",
         yaxis_title="Average Salary in USD",
         template="plotly_white",
+    )
+
+    return figure
+
+
+@app.callback(
+    Output("avg-min-max-salary-region", "figure"),
+    [
+        Input("min-salary-slider", "value"),
+        Input("max-salary-slider", "value"),
+        Input("job-type-checklist", "value"),
+        Input("experience-level-checklist", "value"),
+    ],
+)
+def update_min_max_bar_chart(
+    min_salary, max_salary, selected_job_types, selected_experience_levels
+):
+    # Start with the full DataFrame
+    filtered_df = df.copy()
+
+    # Apply salary filter
+    filtered_df = filtered_df[
+        (filtered_df["min_salary"] >= min_salary)
+        & (filtered_df["max_salary"] <= max_salary)
+    ]
+
+    # Apply job type filter
+    if selected_job_types:
+        filtered_df = filtered_df[
+            filtered_df["formatted_work_type"].isin(selected_job_types)
+        ]
+
+    # Apply experience level filter
+    if selected_experience_levels:
+        filtered_df = filtered_df[
+            filtered_df["formatted_experience_level"].isin(selected_experience_levels)
+        ]
+
+    avg_min_max_salaries_by_region = (
+        filtered_df.groupby("region")
+        .agg(
+            avg_min_salary=("min_salary", "mean"), avg_max_salary=("max_salary", "mean")
+        )
+        .reset_index()
+    )
+
+    # Create a new figure
+    figure = go.Figure(
+        data=[
+            go.Bar(
+                name="Avg Min Salary",
+                x=avg_min_max_salaries_by_region["region"],
+                y=avg_min_max_salaries_by_region["avg_min_salary"],
+            ),
+            go.Bar(
+                name="Avg Max Salary",
+                x=avg_min_max_salaries_by_region["region"],
+                y=avg_min_max_salaries_by_region["avg_max_salary"],
+            ),
+        ]
+    )
+    # Change the bar mode here if you prefer stacked bars
+    figure.update_layout(
+        barmode="group",
+        title="Average Min and Max Salaries by Region",
+        xaxis_title="Region",
+        yaxis_title="Average Salary",
     )
 
     return figure
