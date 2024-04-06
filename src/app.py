@@ -1,4 +1,5 @@
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, Input, Output
+import plotly.express as px
 import plotly.graph_objs as go
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
@@ -27,41 +28,12 @@ avg_min_max_salaries_by_region = (
     .reset_index()
 )
 
-# Edit by A.Z.
-from dash import Dash, html, dcc, Input, Output
-import plotly.express as px
-import plotly.graph_objects as go
-import numpy as np
 
 subdf = df[df["pay_period"] == "YEARLY"]
 subdf1 = subdf.groupby("state_code")["max_salary"].median()
 subdf2 = subdf1.reset_index()
 subdf2.columns = ["state_code", "max_salary"]
 
-
-fig_map = go.Figure(
-    data=go.Choropleth(
-        locations=subdf2["state_code"],
-        z=subdf2["max_salary"].astype(float),
-        locationmode="USA-states",
-        colorscale="Viridis",
-        autocolorscale=True,
-        text=subdf2["state_code"],  # hover text
-        marker_line_color="black",  # line markers between states
-        colorbar_title="USD",
-    )
-)
-
-
-fig_map.update_layout(
-    title_text="2023 US Job Postings by State",
-    geo=dict(
-        scope="usa",
-        projection=go.layout.geo.Projection(type="albers usa"),
-        showlakes=True,  # lakes
-        lakecolor="rgb(255, 255, 255)",
-    ),
-)
 
 
 # Initialize the app
@@ -141,11 +113,19 @@ fig_avg_min_max_region.update_layout(
 app.layout = html.Div(
     [
         html.H1("U.S. Job Postings Visualization", style={"textAlign": "center"}),
-        # Edit by A.Z.
-        html.Div([dcc.Graph(figure=fig_map)]),
+
         # Filters Section
         html.Div(
             [
+                html.Div('State Code'),
+                dcc.Dropdown(
+                    id='state-dropdown',
+                    options=[{'label': state, 'value': state} for state in df['state_code'].unique()],
+                    multi=True,  # Enable multiple selection
+                    value=['NY']  # Default value
+                ),
+                html.Br(),
+
                 html.Label("Minimum Salary"),
                 dcc.Slider(
                     id="min-salary-slider",
@@ -199,11 +179,7 @@ app.layout = html.Div(
         # Map and Charts Section
         html.Div(
             [
-                dcc.Graph(
-                    id="job-postings-map",
-                    figure=go.Figure(),  # Placeholder empty figure
-                    style={"width": "40%", "display": "inline-block"},
-                ),
+                dcc.Graph(id='job-posting'),
                 html.Div(
                     [
                         dcc.Graph(
@@ -229,7 +205,7 @@ app.layout = html.Div(
         # Footer
         html.Div(
             [
-                html.P("Data provided by XYZ Corp", style={"textAlign": "center"}),
+                html.P("This dashboard serves as a personalized job market navigator, offering insights based on job postings on Linkedin across the US in 2023. You can select the Job type, Experience to see the overall salary range in specific regions. The dashboard is made by Andy Zhang, Prabhjit Thind, Sifan Zhang, Yan Zeng. Check the [repo](https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings).", style={"textAlign": "center"}),
             ]
         ),
     ]
@@ -430,6 +406,24 @@ def update_min_max_bar_chart(
     )
 
     return figure
+
+
+@app.callback(
+    Output('job-posting', 'figure'),
+    [Input('state-dropdown', 'value')]
+)
+def update_graph(selected_states):
+    df_filtered = df[(df['state_code'].isin(selected_states))]
+    median_salary = df_filtered.groupby('state_code')['max_salary'].median().reset_index()
+
+    fig = px.choropleth(median_salary, locations="state_code", color="max_salary",
+                        locationmode="USA-states", scope="usa",
+                        color_continuous_scale='Viridis',
+                        range_color=(median_salary['max_salary'].min(), median_salary['max_salary'].max()),
+                        labels={'max_salary': 'Median Max Salary'}, title='Median Max Salary by State')
+    fig.update_layout(mapbox_style="carto-positron")
+
+    return fig
 
 
 # Run the app/dashboard
