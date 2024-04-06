@@ -208,6 +208,9 @@ def update_bar_chart(min_salary, max_salary, selected_job_types, selected_experi
     # Group by region and count the job postings
     jobs_by_region = filtered_df['region'].value_counts().reset_index()
     jobs_by_region.columns = ['region', 'count']
+
+    # Generate the colors for the bar chart dynamically
+    bar_colors = [region_colors.get(region, 'gray') for region in jobs_by_region['region']]
     
     # Create a new figure
     figure = go.Figure(
