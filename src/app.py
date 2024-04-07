@@ -29,10 +29,10 @@ avg_min_max_salaries_by_region = (
 )
 
 
-subdf = df[df["pay_period"] == "YEARLY"]
-subdf1 = subdf.groupby("state_code")["max_salary"].median()
-subdf2 = subdf1.reset_index()
-subdf2.columns = ["state_code", "max_salary"]
+# subdf = df[df["pay_period"] == "YEARLY"]
+# subdf1 = subdf.groupby("state_code")["max_salary"].median()
+# subdf2 = subdf1.reset_index()
+# subdf2.columns = ["state_code", "max_salary"]
 
 
 
@@ -114,7 +114,15 @@ fig_avg_min_max_region.update_layout(
 app.layout = dbc.Container(
     [
         html.H1("U.S. Job Postings Visualization", className="text-center mb-4"),
+        html.P(
+            [
+                """ 
+        Our dashboard serves as a personalized job market navigator, offering insights into job postings across the US for 2023. It provides job seekers with a clear and interactive overview of the job landscape, enabling them to filter opportunities based on salary range, job type, state codes and regions.
+        """
+            ],
+        ),
         
+
         # Filters Section
         dbc.Row(
             [
@@ -433,7 +441,7 @@ def update_graph(selected_states):
                         locationmode="USA-states", scope="usa",
                         color_continuous_scale='Viridis',
                         range_color=(median_salary['max_salary'].min(), median_salary['max_salary'].max()),
-                        labels={'max_salary': 'Median Max Salary'}, title='Median Max Salary by State')
+                        labels={'max_salary': 'Median of Max Salary'}, title='Median of Max Salary by State in U.S.')
     fig.update_layout(mapbox_style="carto-positron")
 
     return fig
