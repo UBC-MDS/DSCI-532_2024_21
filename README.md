@@ -14,6 +14,8 @@ Our dashboard serves as a personalized job market navigator, offering insights b
 
 ## 💻 Usage
 
+![demo](img/bash_demo.gif)
+
 ### Dashboard
 
 Visit the [Job Postings Dashboard](https://dsci-532-2024-21-job-postings.onrender.com/) for our dashboard directly!
