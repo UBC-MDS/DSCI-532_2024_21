@@ -109,107 +109,120 @@ fig_avg_min_max_region.update_layout(
     yaxis_title="Average Salary",
 )
 
-# Define the layout of the app
-app.layout = html.Div(
+
+# Define the layout
+app.layout = dbc.Container(
     [
-        html.H1("U.S. Job Postings Visualization", style={"textAlign": "center"}),
-
+        html.H1("U.S. Job Postings Visualization", className="text-center mb-4"),
+        
         # Filters Section
-        html.Div(
+        dbc.Row(
             [
-                html.Div('State Code'),
-                dcc.Dropdown(
-                    id='state-dropdown',
-                    options=[{'label': state, 'value': state} for state in df['state_code'].unique()],
-                    multi=True,  # Enable multiple selection
-                    value=['NY']  # Default value
-                ),
-                html.Br(),
-
-                html.Label("Minimum Salary"),
-                dcc.Slider(
-                    id="min-salary-slider",
-                    min=0,
-                    max=100000,
-                    step=1000,
-                    value=30000,
-                    marks={
-                        i: "${:,.0f}".format(i) if i % 20000 == 0 else ""
-                        for i in range(0, 100001, 10000)
-                    },
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-                html.Label("Maximum Salary"),
-                dcc.Slider(
-                    id="max-salary-slider",
-                    min=0,
-                    max=100000,
-                    step=1000,
-                    value=70000,
-                    marks={
-                        i: "${:,.0f}".format(i) if i % 20000 == 0 else ""
-                        for i in range(0, 100001, 10000)
-                    },
-                    tooltip={"placement": "bottom", "always_visible": True},
-                ),
-                html.Label("Job Type"),
-                dbc.Checklist(
-                    options=[
-                        {"label": "Full-time", "value": "Full-time"},
-                        {"label": "Part-time", "value": "Part-time"},
-                        {"label": "Contract", "value": "Contract"},
-                    ],
-                    value=["Full-time"],
-                    id="job-type-checklist",
-                    inline=True,
-                ),
-                html.Label("Experience Level"),
-                dbc.Checklist(
-                    options=[
-                        {"label": "Entry Level", "value": "Entry level"},
-                        {"label": "Mid-Senior Level", "value": "Mid-Senior level"},
-                    ],
-                    value=["Entry level"],
-                    id="experience-level-checklist",
-                    inline=True,
-                ),
-            ],
-            style={"width": "20%", "display": "inline-block", "verticalAlign": "top"},
-        ),
-        # Map and Charts Section
-        html.Div(
-            [
-                dcc.Graph(id='job-posting'),
-                html.Div(
+                dbc.Col(
                     [
-                        dcc.Graph(
-                            id="average-salary-region",
-                            figure=avg_salary_by_region_fig,
-                            style={"width": "30%", "display": "inline-block"},
+                        html.H5('State Code'),
+                        dcc.Dropdown(
+                            id='state-dropdown',
+                            options=[{'label': state, 'value': state} for state in df['state_code'].unique()],
+                            multi=True,
+                            value=['NY']
                         ),
-                        dcc.Graph(
-                            id="avg-min-max-salary-region",
-                            figure=fig_avg_min_max_region,
-                            style={"width": "30%", "display": "inline-block"},
+                        html.Br(),
+
+                        html.H5("Minimum Salary"),
+                        dcc.Slider(
+                            id='min-salary-slider',
+                            min=0,
+                            max=100000,
+                            step=1000,
+                            value=30000,
+                            marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
+                            tooltip={"placement": "bottom", "always_visible": True},
                         ),
-                        dcc.Graph(
-                            id="jobs-by-region-bar-chart",
-                            figure=jobs_by_region_figure,
-                            style={"width": "30%", "display": "inline-block"},
+                        html.Br(),
+
+                        html.H5("Maximum Salary"),
+                        dcc.Slider(
+                            id='max-salary-slider',
+                            min=0,
+                            max=100000,
+                            step=1000,
+                            value=70000,
+                            marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
+                            tooltip={"placement": "bottom", "always_visible": True},
                         ),
-                    ]
+                        html.Br(),
+
+                        html.H5("Job Type"),
+                        dbc.Checklist(
+                            options=[
+                                {"label": "Full-time", "value": "Full-time"},
+                                {"label": "Part-time", "value": "Part-time"},
+                                {"label": "Contract", "value": "Contract"},
+                            ],
+                            value=["Full-time"],
+                            id='job-type-checklist',
+                            inline=True,
+                        ),
+                        html.Br(),
+
+                        html.H5("Experience Level"),
+                        dbc.Checklist(
+                            options=[
+                                {"label": "Entry Level", "value": "Entry level"},
+                                {"label": "Mid-Senior Level", "value": "Mid-Senior level"},
+                            ],
+                            value=["Entry level"],
+                            id='experience-level-checklist',
+                            inline=True,
+                        ),
+                    ],
+                    md=4,
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(id='job-posting', figure=jobs_by_region_figure)
+                    ],
+                    md=8,
                 ),
             ],
-            style={"width": "80%", "display": "inline-block"},
+            className="mb-4",
         ),
-        # Footer
-        html.Div(
+        
+        # Additional Figures Section
+        dbc.Row(
             [
-                html.P("This dashboard serves as a personalized job market navigator, offering insights based on job postings on Linkedin across the US in 2023. You can select the Job type, Experience to see the overall salary range in specific regions. The dashboard is made by Andy Zhang, Prabhjit Thind, Sifan Zhang, Yan Zeng. Check the [repo](https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings).", style={"textAlign": "center"}),
+                dbc.Col(dcc.Graph(id="average-salary-region"), md=4),
+                dbc.Col(dcc.Graph(id="avg-min-max-salary-region"), md=4),
+                dbc.Col(dcc.Graph(id="jobs-by-region-bar-chart"), md=4),
             ]
         ),
-    ]
+        
+        # Footer
+        dbc.Row(
+            dbc.Col(
+                [
+                    html.P(
+                        "This dashboard serves as a personalized job market navigator, offering insights based on job postings on Linkedin across the US in 2023. You can select the Job type, Experience level to see the overall salary range in specific regions. The dashboard is made by Andy Zhang, Prabhjit Thind, Sifan Zhang, Yan Zeng.",
+                        className="text-center"
+                    ),
+                    html.P(
+                        [
+                            "Check the ",
+                            html.A("repo", href="https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings", target="_blank"),
+                            "."
+                        ],
+                        className="text-center"
+                    )
+                ],
+                width={"size": 10, "offset": 1},
+                className="border-top pt-3"
+            )
+        ),
+    ],
+    fluid=True,
 )
+
 
 
 # Server side callbacks/reactivity
@@ -402,7 +415,7 @@ def update_min_max_bar_chart(
         barmode="group",
         title="Average Min and Max Salaries by Region",
         xaxis_title="Region",
-        yaxis_title="Average Salary",
+        yaxis_title="Average Salary in USD",
     )
 
     return figure
