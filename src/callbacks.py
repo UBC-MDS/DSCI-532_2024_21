@@ -4,22 +4,39 @@ import plotly.graph_objs as go
 
 def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_max_salaries_by_region, region_colors):
     
+
+    # edited by Andy Z.
     @app.callback(
         Output("job-posting", "figure"),
         [Input("state-dropdown", "value")]
     )
-    def update_graph(selected_states):
-        df_filtered = df[df['state_code'].isin(selected_states)]
+
+
+
+
+    def update_graph(selected_states=None):
+        df_filtered = df  # Include all states by default
+        if selected_states:
+            df_filtered = df[df['state_code'].isin(selected_states)]
+        
         median_salary = df_filtered.groupby('state_code')['max_salary'].median().reset_index()
+        median_salary_1 = df.groupby('state_code')['max_salary'].median().reset_index()
+
 
         fig = px.choropleth(median_salary, locations="state_code", color="max_salary",
                             locationmode="USA-states", scope="usa",
                             color_continuous_scale='Viridis',
-                            range_color=(median_salary['max_salary'].min(), median_salary['max_salary'].max()),
-                            labels={'max_salary': 'Median of Max Salary'}, title='Median of Max Salary by State in U.S.')
-        fig.update_layout(mapbox_style="carto-positron")
+                            range_color=(median_salary_1['max_salary'].min(), median_salary_1['max_salary'].max()),
+                            labels={'max_salary': 'Median of Max Salary'})
+        fig.update_layout(mapbox_style="carto-positron", title='Median of Max Salary by State in U.S.', title_x=0.5)
+
+        # Set legend range based on the calculated min and max median salaries
+        fig.update_traces(colorbar=dict(title="Median of Max Salary", tickvals=[median_salary['max_salary'].min(), median_salary['max_salary'].max()], ticktext=[median_salary['max_salary'].min(), median_salary['max_salary'].max()]))
 
         return fig
+
+
+
 
 
 

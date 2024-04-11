@@ -20,7 +20,9 @@ def create_layout(app, df):
                                 id='state-dropdown',
                                 options=state_options,
                                 multi=True,
-                                value=['NY']
+                                #value=['NY']
+                                #value=df['state_code'].unique()
+                                value=None
                             ),
                             html.Br(),
 
