@@ -25,11 +25,20 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
 
         fig = px.choropleth(median_salary, locations="state_code", color="max_salary",
                             locationmode="USA-states", scope="usa",
-                            color_continuous_scale='Viridis',
+                            color_continuous_scale='deep',
                             range_color=(median_salary_1['max_salary'].min(), median_salary_1['max_salary'].max()),
                             labels={'max_salary': 'Median of Max Salary'})
-        fig.update_layout(mapbox_style="carto-positron", title='Median of Max Salary by State in U.S.', title_x=0.5)
 
+        fig.update_layout(
+            mapbox_style="carto-positron",
+            title={'text': 'Median of Max Salary by State in U.S.',
+                   'font': {'size': 24} #set font size
+                   },
+            title_x=0.5,
+            height=700,  # set figure height
+            width=1200   # set figure width
+    )
+        
         # Set legend range based on the calculated min and max median salaries
         fig.update_traces(colorbar=dict(title="Median of Max Salary", tickvals=[median_salary['max_salary'].min(), median_salary['max_salary'].max()], ticktext=[median_salary['max_salary'].min(), median_salary['max_salary'].max()]))
 
@@ -37,19 +46,16 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
 
 
 
-
-
-
     @app.callback(
         Output("jobs-by-region-bar-chart", "figure"),
         [
-            Input("min-salary-slider", "value"),
-            Input("max-salary-slider", "value"),
+            Input("salary-range-slider", "value"),  
             Input("job-type-checklist", "value"),
             Input("experience-level-checklist", "value"),
         ],
     )
-    def update_bar_chart(min_salary, max_salary, selected_job_types, selected_experience_levels):
+    def update_bar_chart(salary_range, selected_job_types, selected_experience_levels):
+        min_salary, max_salary = salary_range
         filtered_df = df.copy()
         filtered_df = filtered_df[(filtered_df["min_salary"] >= min_salary) & (filtered_df["max_salary"] <= max_salary)]
         if selected_job_types:
@@ -71,9 +77,11 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
             ],
             layout=go.Layout(
                 title="Number of Job Postings by Region",
-                xaxis=dict(title="Region"),
+                title_font=dict(size=24),
+                #xaxis=dict(title="Region"),
                 yaxis=dict(title="Number of Job Postings"),
                 hovermode="closest",
+                plot_bgcolor='rgba(255, 255, 255, 1)'
             ),
         )
         return figure
@@ -83,13 +91,14 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
     @app.callback(
         Output("average-salary-region", "figure"),
         [
-            Input("min-salary-slider", "value"),
-            Input("max-salary-slider", "value"),
+            Input("salary-range-slider", "value"),  
             Input("job-type-checklist", "value"),
             Input("experience-level-checklist", "value"),
         ],
     )
-    def update_avg_salary_chart(min_salary, max_salary, selected_job_types, selected_experience_levels):
+
+    def update_avg_salary_chart(salary_range, selected_job_types, selected_experience_levels):
+        min_salary, max_salary = salary_range
         filtered_df = df.copy()
         filtered_df = filtered_df[(filtered_df["min_salary"] >= min_salary) & (filtered_df["max_salary"] <= max_salary)]
         if selected_job_types:
@@ -113,9 +122,13 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
         )
         figure.update_layout(
             title="Average Salary by Region",
-            xaxis_title="Region",
+            title_font=dict(
+                    size=24,  
+                    ),
+            #xaxis_title="Region",
             yaxis_title="Average Salary in USD",
             template="plotly_white",
+            plot_bgcolor='rgba(255, 255, 255, 1)',
         )
         return figure
 
@@ -124,13 +137,13 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
     @app.callback(
         Output("avg-min-max-salary-region", "figure"),
         [
-            Input("min-salary-slider", "value"),
-            Input("max-salary-slider", "value"),
+            Input("salary-range-slider", "value"),  
             Input("job-type-checklist", "value"),
             Input("experience-level-checklist", "value"),
         ],
     )
-    def update_min_max_salary_chart(min_salary, max_salary, selected_job_types, selected_experience_levels):
+    def update_min_max_salary_chart(salary_range, selected_job_types, selected_experience_levels):
+        min_salary, max_salary = salary_range
         filtered_df = df.copy()
         filtered_df = filtered_df[(filtered_df["min_salary"] >= min_salary) & (filtered_df["max_salary"] <= max_salary)]
         if selected_job_types:
@@ -146,19 +159,25 @@ def register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_ma
                     name="Avg Min Salary", 
                     x=avg_min_max_salaries_by_region_filtered["region"], 
                     y=avg_min_max_salaries_by_region_filtered["avg_min_salary"],
+                    marker=dict(color='blue')
                 ),
                 go.Bar(
                     name="Avg Max Salary", 
                     x=avg_min_max_salaries_by_region_filtered["region"], 
                     y=avg_min_max_salaries_by_region_filtered["avg_max_salary"],
+                    marker=dict(color='red')
                 ),
             ]
         )
         figure.update_layout(
             barmode="group", 
             title="Average Min and Max Salaries by Region", 
-            xaxis_title="Region", 
+            title_font=dict(
+                    size=24,  
+                    ),
+            #xaxis_title="Region", 
             yaxis_title="Average Salary in USD",
+            plot_bgcolor='rgba(255, 255, 255, 1)'
         )
         return figure
 
