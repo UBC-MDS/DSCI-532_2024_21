@@ -15,14 +15,15 @@ def register_callbacks(
     # edited by Andy Z.
     @app.callback(Output("job-posting", "figure"), [Input("state-dropdown", "value")])
     def update_graph(selected_states=None):
-        df_filtered = df  # Include all states by default
+        subdf=df[df['pay_period']=="YEARLY"]
+        df_filtered = subdf  # Include all states by default
         if selected_states:
-            df_filtered = df[df["state_code"].isin(selected_states)]
+            df_filtered = subdf[subdf["state_code"].isin(selected_states)]
 
         median_salary = (
             df_filtered.groupby("state_code")["max_salary"].median().reset_index()
         )
-        median_salary_1 = df.groupby("state_code")["max_salary"].median().reset_index()
+        median_salary_1 = subdf.groupby("state_code")["max_salary"].median().reset_index()
 
         fig = px.choropleth(
             median_salary,
