@@ -7,9 +7,9 @@ def create_layout(app, df):
     layout = dbc.Container(
         [
             html.H1("U.S. Job Postings Visualization", className="text-center mb-4"),
-            html.P(
-                """Our dashboard serves as a personalized job market navigator, offering insights into job postings across the US for 2023. It provides job seekers with a clear and interactive overview of the job landscape, enabling them to filter opportunities based on salary range, job type, state codes, and regions.""",
-            ),
+            #html.P(
+            #    """Our dashboard serves as a personalized job market navigator, offering insights into job postings across the US for 2023. It provides job seekers with a clear and interactive overview of the job landscape, enabling them to filter opportunities based on salary range, job type, state codes, and regions.""",
+            #),
             # Filters Section
             dbc.Row(
                 [
@@ -24,28 +24,16 @@ def create_layout(app, df):
                             ),
                             html.Br(),
 
-                            html.H5("Minimum Salary"),
-                            dcc.Slider(
-                                id='min-salary-slider',
+                            html.H5("Select Salary Range"),
+                            dcc.RangeSlider(
+                                id='salary-range-slider',
                                 min=0,
                                 max=100000,
                                 step=1000,
-                                value=30000,
+                                value=[30000, 70000],
                                 marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
                                 tooltip={"placement": "bottom", "always_visible": True},
-                            ),
-                            html.Br(),
-
-                            html.H5("Maximum Salary"),
-                            dcc.Slider(
-                                id='max-salary-slider',
-                                min=0,
-                                max=100000,
-                                step=1000,
-                                value=70000,
-                                marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
-                                tooltip={"placement": "bottom", "always_visible": True},
-                            ),
+                             ),
                             html.Br(),
 
                             html.H5("Job Type"),
