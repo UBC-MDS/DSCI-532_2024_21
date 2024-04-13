@@ -67,6 +67,8 @@ def create_layout(app, df):
             #     "Our dashboard serves as a personalized job market navigator, offering insights into job postings across the US for 2023. It provides job seekers with a clear and interactive overview of the job landscape, enabling them to filter opportunities based on salary range, job type, state codes, and regions.",
             #     className="mb-4",
             # ),
+            html.Div(id='state-click-info', children="Click on a state in the map to see its region."),
+
             dbc.Row(
                 [
                     dbc.Col(dcc.Graph(id="job-posting"), md=12),
