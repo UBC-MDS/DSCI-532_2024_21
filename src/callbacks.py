@@ -245,3 +245,29 @@ def register_callbacks(
             plot_bgcolor="rgba(255, 255, 255, 1)",
         )
         return figure
+    
+    @app.callback(
+        Output('state-click-info', 'children'),
+        [Input('job-posting', 'clickData')],
+        prevent_initial_call=True
+    )
+    def display_clicked_region(clickData):
+        if clickData is None:
+            return "Click on a state to see more information here."
+        
+        state_code = clickData['points'][0]['location']
+
+        regions = {
+            "Northeast": ['ME', 'NH', 'VT', 'MA', 'RI', 'CT', 'NY', 'PA', 'NJ', 'DE', 'MD'],
+            "Southeast": ['FL', 'GA', 'NC', 'SC', 'VA', 'DC', 'WV', 'AL', 'KY', 'MS', 'TN', 'AR', 'LA'],
+            "Midwest": ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
+            "Southwest": ['AZ', 'NM', 'OK', 'TX'],
+            "West": ['CO', 'ID', 'MT', 'NV', 'UT', 'WY', 'AK', 'CA', 'HI', 'OR', 'WA']
+        }
+
+        for reg, states in regions.items():
+            if state_code in states:
+                region = reg
+                break
+
+        return f"Clicked Region: {region}"
