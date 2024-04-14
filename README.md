@@ -14,7 +14,7 @@ Our dashboard serves as a personalized job market navigator, offering insights b
 
 ## 💻 Usage
 
-![demo](img/bash_demo.gif)
+![demo](img/bash_demo.gif){width="414"}
 
 ### Dashboard
 
