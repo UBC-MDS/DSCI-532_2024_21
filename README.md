@@ -58,6 +58,9 @@ Interested in contributing? Check out the [contributing guidelines](https://gith
 
 ## 📚 License
 
+## Support
+<TBD>
+
 The Job Postings dashboard is licensed under the terms of the [MIT license](https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings/blob/main/LICENSE).
 
 ## ✏️ Reference
