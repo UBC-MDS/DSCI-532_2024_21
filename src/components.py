@@ -36,7 +36,7 @@ def create_layout(app, df):
                 max=100000,
                 step=1000,
                 value=[30000, 70000],
-                marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
+                marks={i: "${}k".format(i // 1000) if i > 0 else "$0" for i in range(0, 100001, 20000)},
                 tooltip={"placement": "bottom", "always_visible": True},
             ),
             html.Br(),
