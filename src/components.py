@@ -90,7 +90,7 @@ def create_layout(app, df):
             'position': 'fixed',
             'left': 0,
             'top': 0,
-            'width': '20%'
+            'width': '25%'
         },
         className='sidebar'
     )
