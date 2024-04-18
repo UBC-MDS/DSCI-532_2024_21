@@ -1,21 +1,34 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-
 def create_layout(app, df):
     state_options = [
         {"label": state, "value": state} for state in df["state_code"].unique()
     ]
 
-    sidebar = html.Div(
+    # State Info section with title
+    state_info_section = html.Div(
         [
-            html.H3("Filters", className="display-4"),
+            html.H4("State Info", className="section-title"),
             html.Hr(),
+
             html.H5("State Code"),
             dcc.Dropdown(
-                id="state-dropdown", options=state_options, multi=True, value=None
+                id="state-dropdown",
+                options=state_options,
+                multi=True,
+                value=None
             ),
-            html.Br(),
+        ],
+        className='sidebar-section'
+    )
+
+    # Region Info section with title, and moved slightly up from the bottom
+    region_info_section = html.Div(
+        [
+            html.H4("Region Info", className="section-title"),
+            html.Hr(),
+
             html.H5("Select Salary Range"),
             dcc.RangeSlider(
                 id="salary-range-slider",
@@ -23,7 +36,7 @@ def create_layout(app, df):
                 max=100000,
                 step=1000,
                 value=[30000, 70000],
-                marks={i: f"${i:,}" for i in range(0, 100001, 20000)},
+                marks={i: "${}k".format(i // 1000) if i > 0 else "$0" for i in range(0, 100001, 20000)},
                 tooltip={"placement": "bottom", "always_visible": True},
             ),
             html.Br(),
@@ -50,23 +63,42 @@ def create_layout(app, df):
                 inline=True,
             ),
         ],
+        className='sidebar-section',
         style={
-            "position": "fixed",
-            "left": 0,
-            "top": 0,
-            "bottom": 0,
-            "padding": "20px",
-            "background-color": "lightblue",
-        },
+            'position': 'absolute',
+            'bottom': '10%',
+            'left': 0,
+            'right': 0,
+            'padding': '1rem'
+        }
     )
+
+    sidebar = html.Div(
+        [
+            html.H3("Filters", className="display-4"),
+            html.Br(),
+            state_info_section,
+            html.Div(style={'flex': 1}),
+            region_info_section,
+        ],
+        style={
+            'display': 'flex',
+            'flexDirection': 'column',
+            'height': '100vh',
+            'padding': '20px',
+            'background-color': 'lightblue',
+            'position': 'fixed',
+            'left': 0,
+            'top': 0,
+            'width': '25%'
+        },
+        className='sidebar'
+    )
+
 
     content = html.Div(
         [
             html.H1("U.S. Job Postings Visualization", className="text-center mb-4"),
-            # html.P(
-            #     "Our dashboard serves as a personalized job market navigator, offering insights into job postings across the US for 2023. It provides job seekers with a clear and interactive overview of the job landscape, enabling them to filter opportunities based on salary range, job type, state codes, and regions.",
-            #     className="mb-4",
-            # ),
             html.Div(id='state-click-info', children="Click on a state in the map to see its region."),
 
             dbc.Row(
@@ -112,8 +144,8 @@ def create_layout(app, df):
         [
             dbc.Row(
                 [
-                    dbc.Col(sidebar, md=3),
-                    dbc.Col(content, md=9),
+                    dbc.Col(sidebar, width=3),
+                    dbc.Col(content, width=9),
                 ],
             ),
         ],
