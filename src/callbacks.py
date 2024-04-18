@@ -1,7 +1,6 @@
 from dash.dependencies import Input, Output, State
 import plotly.express as px
 import plotly.graph_objs as go
-
 from dash.exceptions import PreventUpdate
 
 def register_callbacks(
@@ -19,6 +18,8 @@ def register_callbacks(
     def update_graph(selected_states=None):
         subdf = df[df['pay_period'] == "YEARLY"]
         df_filtered = subdf  
+        if selected_states:
+            df_filtered = subdf[subdf["state_code"].isin(selected_states)]
 
         median_salary = (
             df_filtered.groupby("state_code")["max_salary"].median().reset_index()
@@ -42,21 +43,8 @@ def register_callbacks(
         fig.update_layout(
             mapbox_style="carto-positron",
             title_x=0.5,
-            height=700,
-            width=1200,
-            mapbox=dict(
-                center=dict(lat=37.0902, lon=-95.7129),
-                zoom=3,
-            ),
-            mapbox_zoom=3,
-            
-            geo=dict(
-                showland=True,
-                landcolor='lightgray',
-                showcountries=False,  
-                showsubunits=True,  
-                subunitcolor='white' if selected_states else 'lightgray',  
-            )
+            height=700,  
+            width=1200,  
         )
 
 
@@ -76,6 +64,8 @@ def register_callbacks(
 
         return fig
 
+
+
     # edited by Andy Z.
     @app.callback(
         Output('state-dropdown', 'value'),
@@ -84,13 +74,24 @@ def register_callbacks(
     )
     def update_dropdown_value(click_data, current_value):
         if click_data is None:
-            return []  
+            return current_value  
+        
         clicked_state = click_data['points'][0]['location']
         
-        if current_value is None or clicked_state in current_value:
-            return []  
+        if current_value is None:
+            return [clicked_state]
+        elif clicked_state in current_value:
+            current_value.remove(clicked_state)
+        else:
+            current_value.append(clicked_state)
         
-        return [clicked_state]  
+        return current_value
+
+
+
+
+
+
 
 
     @app.callback(
