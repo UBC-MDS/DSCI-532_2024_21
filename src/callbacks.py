@@ -1,7 +1,7 @@
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import plotly.express as px
 import plotly.graph_objs as go
-
+from dash.exceptions import PreventUpdate
 
 def register_callbacks(
     app,
@@ -13,10 +13,11 @@ def register_callbacks(
 ):
 
     # edited by Andy Z.
-    @app.callback(Output("job-posting", "figure"), [Input("state-dropdown", "value")])
+    @app.callback(Output("job-posting", "figure"), 
+                  [Input("state-dropdown", "value")])
     def update_graph(selected_states=None):
-        subdf=df[df['pay_period']=="YEARLY"]
-        df_filtered = subdf  # Include all states by default
+        subdf = df[df['pay_period'] == "YEARLY"]
+        df_filtered = subdf  
         if selected_states:
             df_filtered = subdf[subdf["state_code"].isin(selected_states)]
 
@@ -36,24 +37,20 @@ def register_callbacks(
                 median_salary_1["max_salary"].min(),
                 median_salary_1["max_salary"].max(),
             ),
-            labels={"max_salary": "Median of Max Salary"},
+            labels={"max_salary": "Median of `The Max Salary`"},
         )
 
         fig.update_layout(
             mapbox_style="carto-positron",
-            title={
-                "text": "Median of Max Salary by State in U.S.",
-                "font": {"size": 20},  # set font size
-            },
             title_x=0.5,
-            height=700,  # set figure height
-            width=1200,  # set figure width
+            height=700,  
+            width=1200,  
         )
 
-        # Set legend range based on the calculated min and max median salaries
+
         fig.update_traces(
             colorbar=dict(
-                title="Median of Max Salary",
+                title="Median of `The Max Salary`",
                 tickvals=[
                     median_salary["max_salary"].min(),
                     median_salary["max_salary"].max(),
@@ -67,6 +64,36 @@ def register_callbacks(
 
         return fig
     
+
+
+
+
+    # edited by Andy Z.
+    @app.callback(
+        Output('state-dropdown', 'value'),
+        [Input('job-posting', 'clickData')],
+        [State('state-dropdown', 'value')]
+    )
+    def update_dropdown_value(click_data, current_value):
+        if click_data is None:
+            return current_value  
+        
+        clicked_state = click_data['points'][0]['location']
+        
+        if current_value is None:
+            return [clicked_state]
+        elif clicked_state in current_value:
+            current_value.remove(clicked_state)
+        else:
+            current_value.append(clicked_state)
+        
+        return current_value
+
+
+
+
+
+
 
 
     @app.callback(
