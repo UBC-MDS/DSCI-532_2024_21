@@ -134,7 +134,7 @@ def register_callbacks(
                 go.Bar(
                     x=jobs_by_region_filtered["region"],
                     y=jobs_by_region_filtered["count"],
-                    marker=dict(color=bar_colors),
+                    marker=dict(color="lightblue"),
                 )
             ],
             layout=go.Layout(
