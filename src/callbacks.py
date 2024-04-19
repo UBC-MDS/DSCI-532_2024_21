@@ -134,7 +134,7 @@ def register_callbacks(
                 go.Bar(
                     x=jobs_by_region_filtered["region"],
                     y=jobs_by_region_filtered["count"],
-                    marker=dict(color=bar_colors),
+                    marker=dict(color="lightblue"),
                 )
             ],
             layout=go.Layout(
@@ -197,7 +197,7 @@ def register_callbacks(
             go.Bar(
                 x=avg_salary_by_region_filtered["region"],
                 y=avg_salary_by_region_filtered["avg_salary"],
-                marker=dict(color=bar_colors_avg_sal),
+                marker=dict(color="lightblue"),
             )
         )
         figure.update_layout(
@@ -211,103 +211,6 @@ def register_callbacks(
             plot_bgcolor="rgba(255, 255, 255, 1)",
         )
         return figure
-    
-
-    # # Backup Version - line range plot
-    # @app.callback(
-    #     Output("avg-min-max-salary-region", "figure"),
-    #     [
-    #         Input("salary-range-slider", "value"),
-    #         Input("job-type-checklist", "value"),
-    #         Input("experience-level-checklist", "value"),
-    #     ],
-    # )
-    # def update_min_max_salary_chart(
-    #     salary_range, selected_job_types, selected_experience_levels
-    # ):
-    #     min_salary, max_salary = salary_range
-    #     filtered_df = df.copy()
-    #     filtered_df = filtered_df[
-    #         (filtered_df["min_salary"] >= min_salary)
-    #         & (filtered_df["max_salary"] <= max_salary)
-    #     ]
-    #     if selected_job_types:
-    #         filtered_df = filtered_df[
-    #             filtered_df["formatted_work_type"].isin(selected_job_types)
-    #         ]
-    #     if selected_experience_levels:
-    #         filtered_df = filtered_df[
-    #             filtered_df["formatted_experience_level"].isin(
-    #                 selected_experience_levels
-    #             )
-    #         ]
-
-    #     avg_min_max_salaries_by_region_filtered = (
-    #         filtered_df.groupby("region")
-    #         .agg(
-    #             avg_min_salary=("min_salary", "mean"),
-    #             avg_max_salary=("max_salary", "mean"),
-    #         )
-    #         .reset_index()
-    #     )
-
-    #     # Create the range plot
-    #     figure = go.Figure()
-
-    #     # Add traces for the min and max salary ranges
-    #     figure.add_trace(
-    #         go.Scatter(
-    #             name="Salary Range",
-    #             x=avg_min_max_salaries_by_region_filtered["region"],
-    #             y=avg_min_max_salaries_by_region_filtered["avg_min_salary"],
-    #             mode='markers',
-    #             marker=dict(color="blue"),
-    #             showlegend=False
-    #         )
-    #     )
-    #     figure.add_trace(
-    #         go.Scatter(
-    #             name="Salary Range",
-    #             x=avg_min_max_salaries_by_region_filtered["region"],
-    #             y=avg_min_max_salaries_by_region_filtered["avg_max_salary"],
-    #             mode='markers',
-    #             marker=dict(color="red"),
-    #             showlegend=False
-    #         )
-    #     )
-
-    #     max_y_value = avg_min_max_salaries_by_region_filtered["avg_max_salary"].max()
-    #     min_y_value = avg_min_max_salaries_by_region_filtered["avg_min_salary"].min()
-        
-    #     # Add lines connecting min and max points
-    #     for i, region in enumerate(avg_min_max_salaries_by_region_filtered["region"]):
-    #         figure.add_trace(
-    #             go.Scatter(
-    #                 x=[region, region],
-    #                 y=[
-    #                     avg_min_max_salaries_by_region_filtered["avg_min_salary"][i],
-    #                     avg_min_max_salaries_by_region_filtered["avg_max_salary"][i],
-    #                 ],
-    #                 mode="lines",
-    #                 line=dict(color="grey"),
-    #                 showlegend=False
-    #             )
-    #         )
-            
-    #     # Update layout
-    #     figure.update_layout(
-    #         title="Average Min and Max Salaries by Region",
-    #         title_font=dict(
-    #             size=18,
-    #         ),
-    #         yaxis=dict(
-    #             title="Salary in USD",
-    #             range=[min_y_value-5000, max_y_value+5000]
-    #         ),
-    #         plot_bgcolor="rgba(255, 255, 255, 1)"
-    #     )
-        
-    #     return figure
 
 
     
