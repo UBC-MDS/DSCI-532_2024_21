@@ -2,6 +2,7 @@ from dash.dependencies import Input, Output, State
 import plotly.express as px
 import plotly.graph_objs as go
 from dash.exceptions import PreventUpdate
+import dash
 
 def register_callbacks(
     app,
@@ -68,25 +69,38 @@ def register_callbacks(
 
 
 
-    # edited by Andy Z.
     @app.callback(
         Output('state-dropdown', 'value'),
-        [Input('job-posting', 'clickData')],
-        [State('state-dropdown', 'value')]
+        [
+            Input('job-posting', 'clickData'),
+            Input('job-posting', 'selectedData'),
+            State('state-dropdown', 'value')
+        ]
     )
-    def update_dropdown_value(click_data, current_value):
-        if click_data is None:
-            return current_value  
+    def update_dropdown_value(click_data, selected_data, current_value):
+        ctx = dash.callback_context
         
-        clicked_state = click_data['points'][0]['location']
-        
-        if current_value is None:
-            return [clicked_state]
-        elif clicked_state in current_value:
-            current_value.remove(clicked_state)
+        if not ctx.triggered:
+            input_id = 'No input yet'
         else:
-            current_value.append(clicked_state)
+            input_id = ctx.triggered[0]['prop_id'].split('.')[0]
         
+        if input_id == 'job-posting' and click_data:
+            # Handle click data
+            clicked_state = click_data['points'][0]['location']
+            
+            if current_value is None:
+                return [clicked_state]
+            elif clicked_state in current_value:
+                current_value.remove(clicked_state)
+            else:
+                current_value.append(clicked_state)
+                
+        elif input_id == 'job-posting' and selected_data:
+            # Handle lasso select tool data
+            selected_states = [point['location'] for point in selected_data['points']]
+            current_value = list(set(current_value + selected_states if current_value else selected_states))
+            
         return current_value
 
 
@@ -310,3 +324,6 @@ def register_callbacks(
                 break
 
         return f"Clicked Region: {region}"
+    
+
+    

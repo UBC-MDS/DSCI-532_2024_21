@@ -103,7 +103,7 @@ def create_layout(app, df):
 
             dbc.Row(
                 [
-                    dbc.Col(dcc.Graph(id="job-posting"), md=12),
+                    dbc.Col(dcc.Graph(id="job-posting", className='cursor-pointer'), md=12),
                 ],
             ),
             dbc.Row(
