@@ -4,3 +4,4 @@ dash==2.16.*
 dash-bootstrap-components==1.5.*
 pandas>=1.4.0
 plotly>=5.0.0
+Flask-Caching==2.1.0
