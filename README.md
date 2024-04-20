@@ -2,11 +2,11 @@
 
 This project is about making a dashboard of LinkedIn job postings in the US in 2023.
 
-[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Python 3.11.0](https://img.shields.io/badge/python-3.11.0-blue.svg)](https://www.python.org/downloads/release/python-390/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Python 3.11.0](https://img.shields.io/badge/python-3.11.0-blue.svg)](https://www.python.org/downloads/release/python-390/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 📖 The Problem
 
-Finding suitable opportunities in the job market can be daunting for job seekers as they have to sift through large amounts of data to find suitable opportunities that match their target positions, salary expectation ranges and ideal working locations. Such difficulties are usually encountered by career advisor and human resources analyst as well. The key challenge is the complexity and time-consuming nature of processing and understanding large amounts of job market data, which can lead to missed opportunities and unsatisfactory career decisions.
+Finding suitable opportunities in the job market can be daunting for job seekers as they have to sift through large amounts of data to find suitable opportunities that match their target positions, salary expectation ranges and ideal working locations. Such difficulties are usually encountered by career advisors and human resources analysts as well. The key challenge is the complexity and time-consuming nature of processing and understanding large amounts of job market data, which can lead to missed opportunities and unsatisfactory career decisions.
 
 ## 💡 The Solution
 
@@ -58,10 +58,11 @@ Interested in contributing? Check out the [contributing guidelines](https://gith
 
 ## 📚 License
 
-## Support
-<TBD>
-
 The Job Postings dashboard is licensed under the terms of the [MIT license](https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings/blob/main/LICENSE).
+
+## 🤜 Support
+
+If you encounter any issues, require assistance, need to report a bug or request a feature, please file an issue through our [GitHub Issues](https://github.com/UBC-MDS/DSCI-532_2024_21_Job-Postings/issues).
 
 ## ✏️ Reference
 
