@@ -25,7 +25,7 @@ region_colors = {
 app.layout = create_layout(app, df)
 
 # Register callbacks for interactivity
-register_callbacks(app, df, jobs_by_region, avg_salary_by_region, avg_min_max_salaries_by_region, region_colors)
+register_callbacks(app, df, jobs_by_region, avg_min_max_salaries_by_region, region_colors)
 
 # Needed for deploying
 server = app.server

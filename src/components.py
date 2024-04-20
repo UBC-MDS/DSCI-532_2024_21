@@ -108,9 +108,9 @@ def create_layout(app, df):
             ),
             dbc.Row(
                 [
-                    dbc.Col(dcc.Graph(id="average-salary-region"), md=4),
-                    dbc.Col(dcc.Graph(id="avg-min-max-salary-region"), md=4),
-                    dbc.Col(dcc.Graph(id="jobs-by-region-bar-chart"), md=4),
+                    # dbc.Col(dcc.Graph(id="average-salary-region"), md=4),
+                    dbc.Col(dcc.Graph(id="avg-min-max-salary-region"), md=6, style={'paddingLeft': '50px'}),
+                    dbc.Col(dcc.Graph(id="jobs-by-region-bar-chart"), md=6, style={'paddingRight': '50px'}),
                 ]
             ),
             dbc.Row(
