@@ -2,6 +2,21 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 def create_layout(app, df):
+    """
+    Create the layout for the Dash app.
+
+    Parameters
+    ----------
+    app : dash.Dash
+        The Dash application instance.
+    df : pd.DataFrame
+        The DataFrame containing job postings data used to derive dynamic elements like state options.
+
+    Returns
+    -------
+    dash.development.base_component.Component
+        The layout component representing the UI of the app.
+    """
     state_options = [
         {"label": state, "value": state} for state in df["state_code"].unique()
     ]
@@ -108,7 +123,6 @@ def create_layout(app, df):
             ),
             dbc.Row(
                 [
-                    # dbc.Col(dcc.Graph(id="average-salary-region"), md=4),
                     dbc.Col(dcc.Graph(id="avg-min-max-salary-region"), md=6, style={'paddingLeft': '50px'}),
                     dbc.Col(dcc.Graph(id="jobs-by-region-bar-chart"), md=6, style={'paddingRight': '50px'}),
                 ]
