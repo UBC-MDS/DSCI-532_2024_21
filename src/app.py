@@ -10,6 +10,7 @@ jobs_by_region, avg_salary_by_region, avg_min_max_salaries_by_region = preproces
 
 # Initialize Dash app
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app.title = 'Dashboard of Job Postings on LinkedIn (US, 2023)'
 
 # Define global styles
 region_colors = {
