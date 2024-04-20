@@ -2,6 +2,21 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 def create_layout(app, df):
+    """
+    Create the layout for the Dash app.
+
+    Parameters
+    ----------
+    app : dash.Dash
+        The Dash application instance.
+    df : pd.DataFrame
+        The DataFrame containing job postings data used to derive dynamic elements like state options.
+
+    Returns
+    -------
+    dash.development.base_component.Component
+        The layout component representing the UI of the app.
+    """
     state_options = [
         {"label": state, "value": state} for state in df["state_code"].unique()
     ]
