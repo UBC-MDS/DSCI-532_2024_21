@@ -10,7 +10,6 @@ def register_callbacks(
     app,
     df,
     jobs_by_region,
-    # avg_salary_by_region,
     avg_min_max_salaries_by_region,
     region_colors,
 ):
@@ -77,6 +76,8 @@ def register_callbacks(
         )
 
         return fig
+
+
 
     @app.callback(
         Output('state-dropdown', 'value'),
@@ -160,76 +161,12 @@ def register_callbacks(
             layout=go.Layout(
                 title="Number of Job Postings by Region",
                 title_font=dict(size=18),
-                # xaxis=dict(title="Region"),
                 yaxis=dict(title="Number of Job Postings"),
                 hovermode="closest",
                 plot_bgcolor="rgba(255, 255, 255, 1)",
             ),
         )
         return figure
-
-    # @app.callback(
-    #     Output("average-salary-region", "figure"),
-    #     [
-    #         Input("salary-range-slider", "value"),
-    #         Input("job-type-checklist", "value"),
-    #         Input("experience-level-checklist", "value"),
-    #     ],
-    # )
-    # @cache.memoize(timeout=300)  # Cache for 5 minutes
-    # def update_avg_salary_chart(
-    #     salary_range, selected_job_types, selected_experience_levels
-    # ):
-    #     min_salary, max_salary = salary_range
-    #     filtered_df = df.copy()
-    #     filtered_df = filtered_df[
-    #         (filtered_df["min_salary"] >= min_salary)
-    #         & (filtered_df["max_salary"] <= max_salary)
-    #     ]
-    #     if selected_job_types:
-    #         filtered_df = filtered_df[
-    #             filtered_df["formatted_work_type"].isin(selected_job_types)
-    #         ]
-    #     if selected_experience_levels:
-    #         filtered_df = filtered_df[
-    #             filtered_df["formatted_experience_level"].isin(
-    #                 selected_experience_levels
-    #             )
-    #         ]
-
-    #     filtered_df["avg_salary"] = filtered_df[["min_salary", "max_salary"]].mean(
-    #         axis=1
-    #     )
-    #     avg_salary_by_region_filtered = (
-    #         filtered_df.groupby("region")["avg_salary"].mean().reset_index()
-    #     )
-    #     avg_salary_by_region_filtered = avg_salary_by_region_filtered.sort_values(
-    #         by="avg_salary", ascending=False
-    #     )
-
-    #     bar_colors_avg_sal = [
-    #         region_colors[region] for region in avg_salary_by_region_filtered["region"]
-    #     ]
-
-    #     figure = go.Figure()
-    #     figure.add_trace(
-    #         go.Bar(
-    #             x=avg_salary_by_region_filtered["region"],
-    #             y=avg_salary_by_region_filtered["avg_salary"],
-    #             marker=dict(color="lightblue"),
-    #         )
-    #     )
-    #     figure.update_layout(
-    #         title="Average Salary by Region",
-    #         title_font=dict(
-    #             size=18,
-    #         ),
-    #         # xaxis_title="Region",
-    #         yaxis_title="Average Salary in USD",
-    #         template="plotly_white",
-    #         plot_bgcolor="rgba(255, 255, 255, 1)",
-    #     )
-    #     return figure
 
       
 
@@ -304,6 +241,8 @@ def register_callbacks(
 
         return figure
 
+
+
     @app.callback(
         Output("state-click-info", "children"),
         [Input("job-posting", "clickData")],
@@ -369,7 +308,3 @@ def register_callbacks(
                 break
 
         return f"Clicked Region: {region}"
-
-      
-      
-      

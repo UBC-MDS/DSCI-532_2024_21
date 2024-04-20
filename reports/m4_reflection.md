@@ -8,6 +8,8 @@ In Milestone 4, we make some changes to our dashboard, including:
 
     When we click on a certain state on the map, the state code filter on the side will be synchronized.
 
+    When using the lasso select tool to choose a group of states on the map, the state code filter on the side will also be synchronized.
+
 -   Switch bar charts for a ranged chart. (or other similar clarification)
 
 -   Get rid of the bottom left bar chart since the average of the min and max is not that intuitive and will already be covered by the ranged charts
